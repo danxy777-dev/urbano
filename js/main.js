@@ -586,9 +586,9 @@
             '<div class="event-meta">' +
               (time ? '<span class="event-time">🕗 ' + escapeHtml(time) + '</span>' : '') +
               (isRecurring ? '<span class="event-recurring-badge">Recorrente</span>' : '') +
-              '<a class="event-reserve" href="' + contactTarget() + '" ' +
-                 'data-track-label="reserva-evento-' + escapeHtml(ev.id) + '">' +
-                'Garantir mesa' +
+              '<a class="event-contact" href="' + contactTarget('Olá! Quero saber mais sobre o evento ' + (ev.title ? ev.title : '') + '.') + '" ' +
+                 'data-track-label="evento-contato-' + escapeHtml(ev.id) + '">' +
+                'Quero saber mais' +
               '</a>' +
             '</div>' +
           '</div>' +
@@ -953,7 +953,7 @@
   /* ------------------------------------------------------------------------
    * 10. WHATSAPP INTEGRATION
    * ---------------------------------------------------------------------- */
-  var DEFAULT_WA_MESSAGE = 'Olá! Gostaria de fazer uma reserva no Terraço Urbano.';
+  var DEFAULT_WA_MESSAGE = 'Olá! Vim pelo site do Terraço Urbano e quero falar com vocês.';
 
   var siteConfig = null;
 
@@ -1006,26 +1006,6 @@
     return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.9.6 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.9.5 2.8.6a2 2 0 0 1 1.8 2.2z" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   }
 
-  function reservationDateBR(value) {
-    if (!value) return '';
-    var d = new Date(value);
-    if (isNaN(d.getTime())) return value;
-    return ('0' + d.getDate()).slice(-2) + '/' + ('0' + (d.getMonth() + 1)).slice(-2) + '/' + d.getFullYear();
-  }
-
-  function whatsappReservationMessage(fields) {
-    var obs = fields.observacoes && fields.observacoes.trim() ? fields.observacoes.trim() : 'Nenhuma';
-    var lines = [
-      'Nome: ' + (fields.nome || '—'),
-      'Data: ' + (fields.data || '—'),
-      'Horário: ' + (fields.horario || '—'),
-      'Pessoas: ' + (fields.pessoas || '—'),
-      'Observações: ' + obs
-    ];
-    return 'Olá! Gostaria de solicitar uma reserva no Terraço Urbano.\n\n' +
-      lines.join('\n') + '\n\nAguardo a confirmação. Obrigado!';
-  }
-
   function initWhatsApp() {
     loadSiteConfig();
 
@@ -1074,68 +1054,6 @@
       }
       // tel: tem navegacao padrao
     });
-
-    // Reservation form (if present)
-    var reservationForm = $('[data-reservation-form]');
-    if (reservationForm) {
-      var hintField = $('.form-hint', reservationForm);
-
-      function field(selector) {
-        return reservationForm.querySelector(selector);
-      }
-
-      reservationForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        var people = (field('[name="pessoas"]').value || '').trim();
-        var fields = {
-          nome: (field('[name="nome"]').value || '').trim(),
-          data: reservationDateBR(field('[name="data"]').value),
-          horario: (field('[name="horario"]').value || '').trim(),
-          pessoas: people,
-          observacoes: (field('[name="observacoes"]').value || '').trim()
-        };
-
-        // Validacao dos campos obrigatorios
-        var required = [
-          [field('[name="nome"]'), 'nome'],
-          [field('[name="data"]'), 'data'],
-          [field('[name="horario"]'), 'horario'],
-          [field('[name="pessoas"]'), 'pessoas']
-        ];
-        var firstInvalid = null;
-        required.forEach(function (pair) {
-          var el = pair[0];
-          var name = pair[1];
-          if (!el) return;
-          var ok = !!el.value && String(el.value).trim() !== '';
-          el.classList.toggle('form-input--invalid', !ok);
-          el.setAttribute('aria-invalid', ok ? 'false' : 'true');
-          if (!ok && !firstInvalid) firstInvalid = el;
-          if (name === 'data') fields.data = ok ? fields.data : '';
-        });
-
-        if (firstInvalid) {
-          firstInvalid.focus();
-          if (hintField) hintField.textContent = 'Preencha os campos obrigatórios para continuar (nome, data, horário e pessoas).';
-          return;
-        }
-
-        if (hintField) hintField.textContent = 'Abrindo WhatsApp com sua mensagem pronta...';
-
-        var msg = whatsappReservationMessage(fields);
-        var wa = getWhatsappNumber();
-        if (wa) {
-          var url = 'https://wa.me/' + wa + '?text=' + encodeURIComponent(msg);
-          var opened = null;
-          try { opened = window.open(url, '_blank'); } catch (err) { /* popup bloqueado */ }
-          if (!opened) window.location.href = url;
-        } else {
-          window.location.href = 'tel:+' + getPhoneNumber();
-        }
-        trackEvent('reservation', 'submit', fields.nome + ', ' + fields.data + ', ' + fields.horario + ', ' + fields.pessoas + ' pessoas');
-      });
-    }
   }
 
   /* ------------------------------------------------------------------------
@@ -1363,7 +1281,6 @@
       case 'delivery': return 'delivery';
       case 'menu': return 'menu';
       case 'directions': return 'directions';
-      case 'reservation': return 'reservation';
       case 'instagram': return 'instagram';
       default: return 'interaction';
     }
@@ -1390,13 +1307,6 @@
     $$('[data-instagram]').forEach(function (el) {
       el.addEventListener('click', function () {
         trackEvent('instagram', 'click', el.getAttribute('data-track-label') || 'instagram');
-      });
-    });
-
-    // Reservation buttons
-    $$('[data-reservation]').forEach(function (el) {
-      el.addEventListener('click', function () {
-        trackEvent('reservation', 'click', el.getAttribute('data-track-label') || 'reservation');
       });
     });
   }
@@ -1449,8 +1359,23 @@
     });
 
     document.addEventListener('siteconfig:loaded', function () {
-      var url = siteConfig && siteConfig.site && siteConfig.site.wazeUrl ? siteConfig.site.wazeUrl : '';
-      if (!url || url.indexOf('[INSERIR') !== -1) return;
+      var cfg = siteConfig && siteConfig.site ? siteConfig.site : null;
+      if (!cfg) return;
+
+      var url = '';
+      var coords = cfg.coordinates;
+      var hasLat = coords && /^-?\d+(\.\d+)?$/.test(coords.lat);
+      var hasLng = coords && /^-?\d+(\.\d+)?$/.test(coords.lng);
+
+      // Coordenadas reais fornecidas → abre o Waze na localização exata.
+      if (hasLat && hasLng) {
+        url = 'https://www.waze.com/ul?ll=' + encodeURIComponent(coords.lat) + ',' + encodeURIComponent(coords.lng) + '&navigate=yes&z=17';
+      } else if (cfg.wazeUrl && cfg.wazeUrl.indexOf('[INSERIR') === -1) {
+        url = cfg.wazeUrl;
+      }
+
+      if (!url) return;
+
       $$('[data-waze]').forEach(function (el) {
         el.setAttribute('href', url);
       });

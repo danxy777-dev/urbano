@@ -26,6 +26,8 @@
       "lat": "[INSERIR LATITUDE (não inventar)]",
       "lng": "[INSERIR LONGITUDE (não inventar)]"
     },
+    "wazeUrl": "https://www.waze.com/ul?q=R.%20Maj.%20Jo%C3%A3o%20Nunes%2C%2096%20-%20Jardim%20S%C3%A3o%20Paulo%2C%20S%C3%A3o%20Paulo%20-%20SP&navigate=yes&z=17",
+    "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=R.+Maj.+Jo%C3%A3o+Nunes,+96,+Jardim+S%C3%A3o+Paulo,+S%C3%A3o+Paulo+-+SP,+Brasil",
     "googleMapsEmbed": "[INSERIR URL DE EMBED DO GOOGLE MAPS]",
     "googleMapsPlaceId": "[INSERIR PLACE ID]",
     "googleReviewUrl": "[INSERIR URL DO PERFIL DE AVALIAÇÕES NO GOOGLE]",
@@ -67,7 +69,6 @@
       "directions_click": "directions_click",
       "maps_click": "maps_click",
       "waze_click": "waze_click",
-      "reservation_click": "reservation_click",
       "instagram_click": "instagram_click",
       "event_click": "event_click"
     }
