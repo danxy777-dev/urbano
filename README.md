@@ -22,7 +22,8 @@ terracourbano/
 ├── data/                   → CONTEÚDO EDITÁVEL SEM PROGRAMAR
 │   ├── site.json           → Contato, endereço, horários, analytics, delivery
 │   ├── menu.json           → Cardápio (categorias + itens + preços)
-│   └── events.json         → Eventos
+│   ├── events.json         → Eventos
+│   └── reviews.json        → Avaliações reais do Google (carrossel)
 └── assets/
     └── images/             → Fotos (logo, hero, galeria, instagram, etc.)
 ```
@@ -48,20 +49,19 @@ Tudo que contém `[INSERIR ...]` no código e **não foi inventado** precisa ser
 |---|---|---|
 | `url` | Endereço final do site | [INSERIR] |
 | `phone` | Telefone oficial — `(11) 2288-1005` | ✅ preenchido |
-| `whatsapp` | WhatsApp — **VALIDAR COM O CLIENTE** | 🔶 pendente |
+| `whatsapp` | WhatsApp confirmado — `551122881005` | ✅ preenchido |
 | `address.*` | `R. Maj. João Nunes, 96` / `02046-070` | ✅ preenchido |
 | `plusCode` | `G94Q+XP` | ✅ preenchido |
 | `rating` / `reviewCount` | `4.3` / `712` (Google) | ✅ preenchido |
 | `priceRange` | `R$ 40-140 por pessoa` | ✅ preenchido |
 | `coordinates` | Lat/Long para o mapa | 🔶 pendente |
-| `googleMapsEmbed` | Código iframe do Google Maps | 🔶 pendente |
+| `googleMapsEmbed` | Embed do Google Maps (já aplicado sem chave) | ✅ preenchido |
 | `hours.*` | Horários reais por dia (ex: `"18:00 - 23:00"`) | 🔶 pendente |
 | `delivery.*` | iFood: URL OFICIAL do Terraço (já aplicada) | ✅ preenchido |
 
-> **Importante — WhatsApp:** enquanto o número não for validado pelo cliente, todos os
-> botões de contato abrem o **telefone** (`tel:+551122881005`). Assim que `whatsapp` em
-> `site.json` receber o número real (formato `551122881005`), o site passa automaticamente
-> a usar `wa.me`.
+> **✓ WhatsApp confirmado** — `551122881005` (formato digital, sem espaço). Todos os botões
+> de contato já abrem `wa.me/551122881005` com a mensagem pronta; o ícone flutuante usa o
+> WhatsApp e o formulário de reserva envia a mensagem por esse canal.
 
 ### 3.2 `index.html`
 - `title` / meta `description` — já atualizados com dados reais
@@ -70,8 +70,8 @@ Tudo que contém `[INSERIR ...]` no código e **não foi inventado** precisa ser
 - JSON-LD: telefone, endereço, faixa de preço e nota Google **já preenchidos**; faltam horários e geo
 - Endereço na seção Reservas, Localização, Footer e JSON-LD → ✅ `R. Maj. João Nunes, 96`
 - Estatísticas da seção Sobre → ✅ `4,3★` / `+700 avaliações` / `R$ 40–140`; falta `[xx]` anos de história
-- Avaliações reais (seção Avaliações) — **nunca inventar**; aguardando cliente
-- Google Maps: colar o iframe no lugar do placeholder
+- Avaliações reais (seção Avaliações) → carrossel alimentado por `data/reviews.json`; **nunca inventar** — enquanto o arquivo estiver vazio, o site mostra "as avaliações reais entram em breve"
+- Google Maps → embed sem chave já aplicado nas seções **Reservas** e **Localização** (não usa API key)
 
 ### 3.3 `data/menu.json`
 Preencher itens reais por categoria (nome, descrição, preço, foto). Sem item preenchido, o site exibe avisos automáticos ("Em breve").
@@ -118,6 +118,22 @@ Editar `data/events.json`. Cada evento:
 ```
 - Evento recorrente? Use `"date": "every-saturday"`.
 
+### Avaliações (Google)
+Editar `data/reviews.json` — **usar apenas avaliações reais e autorizadas pelo cliente**:
+```json
+[
+  {
+    "name": "Nome do cliente (Google)",
+    "rating": 5,
+    "text": "Texto exato da avaliação pública",
+    "photo": ""
+  }
+]
+```
+- `rating`: de `1` a `5` (estrelas exibidas no card).
+- `photo`: URL da foto de perfil (opcional; sem foto, o site gera um avatar com a inicial).
+- O carrossel mostra os cards em loop infinito com arraste em touch/mouse; **nunca inventar** depoimentos. Enquanto a lista estiver vazia (`[]`), o site exibe aviso honesto.
+
 ### Horários, contato e delivery
 Editar `data/site.json`. O site já mostra **"Aberto agora / Fechado agora"** automaticamente com base nos horários informados. O delivery oficial do Terraço Urbano é o **iFood** (seção "Delivery" com CTA "Pedir pelo iFood" — URL real já aplicada).
 
@@ -143,6 +159,7 @@ O site possui um **banner de consentimento** que segue a LGPD:
 - Clique no Cardápio → `menu_click`
 - Clique em Como Chegar → `directions_click` (inclui o botão do Waze)
 - Clique em Reserva → `reservation_click`
+- Envio do formulário de reserva → `reservation_submit` (com nome, data, horário, pessoas)
 - Clique no Instagram → `instagram_click`
 
 > Os botões de contato (`data-whatsapp`) decidem o canal **automaticamente**: se o WhatsApp
@@ -202,13 +219,23 @@ O site é estático e publica em qualquer hospedagem:
 
 ## 12. `.env.example`
 
-O arquivo `.env.example` documenta toda a configuração (contato, endereço, analytics, delivery) e os cuidados de segurança. Como é um site estático, **não existem segredos em tempo de execução** — jamais coloque chaves de Google Maps JS API no navegador; prefira o **embed sem chave** (iframe).
+O arquivo `.env.example` documenta toda a configuração (contato, endereço, analytics, delivery) e os cuidados de segurança. Como é um site estático, **não existem segredos em tempo de execução** — jamais coloque chaves de Google Maps JS API no navegador; prefira o **embed sem chave** (iframe), que é o que o site usa.
+
+### Google Maps sem chave (keyless)
+As seções Reservas e Localização usam o embed oficial do Google sem API key:
+
+```
+https://www.google.com/maps?q=Terra%C3%A7o+Urbano+Bar+e+Restaurante,+R.+Maj.+Jo%C3%A3o+Nunes,+96,+Jardim+S%C3%A3o+Paulo,+S%C3%A3o+Paulo+-+SP,+02046-070&hl=pt-BR&z=16&output=embed
+```
+
+- O marcador é gerado automaticamente a partir do endereço em `q`.
+- Se no futuro quiser mapas interativos (Maps JavaScript API), use uma chave pública **restringida por domínio/HTTP referrer** e habilite só as APIs usadas — nunca deixe chaves soltas no código público.
 
 ## 13. Observações éticas e legais
 
 - **Nunca inventar** preços, pratos, horários, eventos, endereço ou avaliações.
 - Toda informação pendente está marcada como `[INSERIR ...]`.
-- **WhatsApp em aberto**: `site.json → whatsapp` está como `[VALIDAR COM O CLIENTE...]` — nenhum link de `wa.me` é gerado até o número ser confirmado; os botões abrem o telefone.
+- **WhatsApp confirmado**: `site.json → whatsapp = "551122881005"` — todos os links de `wa.me` e o envio de reservas funcionam por esse canal.
 - **Delivery oficial**: apenas **iFood** (URL oficial já aplicada). Não publicar pontos de venda não confirmados (ex.: Rappi/Uber Eats).
 - Utilizar somente fotos reais do restaurante (ou com autorização) para ambiente, comidas e público.
 - O cookie de consentimento fica inativo até que IDs reais de rastreamento sejam configurados — nunca instalar rastreadores escondidos.
@@ -217,9 +244,12 @@ O arquivo `.env.example` documenta toda a configuração (contato, endereço, an
 
 - Dados reais do cliente em `site.json` e `index.html`: telefone, endereço `R. Maj. João Nunes, 96`, CEP, Plus Code `G94Q+XP`, faixa de preço `R$ 40–140`, nota `4,3`/`712`, URL oficial do iFood.
 - **Canais de contato inteligentes**: botões `data-whatsapp` resolvem WhatsApp `wa.me` **ou** telefone `tel:` automaticamente (evento `whatsapp_click`/`phone_click`); ícone flutuante vira telefone enquanto o WhatsApp não for confirmado.
-- **3 CTAs principais e barra fixa mobile** `[Cardápio] [Reservar] [iFood]`.
+- **3 CTAs principais e barra fixa mobile** `[Cardápio] [Reservar] [iFood]` — os botões "Reservar mesa" (hero, CTA-final e barra mobile) rolam até a seção de reservas.
+- **Formulário de reserva completo** (nome, data, horário, pessoas, observações): valida campos obrigatórios, monta a mensagem no WhatsApp com `encodeURIComponent` e abre `wa.me/551122881005` sem recarregar a página.
+- **Carrossel de avaliações** alimentado por `data/reviews.json` (loop infinito, arraste touch/mouse, pausa ao reduzir movimento). Sem dados reais o carrossel mostra aviso honesto — nenhuma avaliação é inventada.
+- **Google Maps keyless** aplicado nas seções Reservas e Localização (embed oficial sem API key, marcador automático no endereço).
 - Seção **Delivery** reorganizada para iFood e reposicionada logo após o Cardápio.
 - Páginas `privacy.html` e `termos.html` criadas e linkadas no rodapé + aviso de cookies.
 - `404.html` com a mensagem nova (`"Ops! Esse caminho não leva ao Terraço."`).
 
-**Pendências para publicação:** horários, ano de fundação (`[xx]`), coordenadas/embed do Maps, fotos reais, URL final e domínio.
+**Pendências para publicação:** horários, ano de fundação (`[xx]`), avaliações reais em `data/reviews.json`, fotos reais, URL final e domínio.

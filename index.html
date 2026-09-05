@@ -246,8 +246,8 @@
       </p>
 
 <div class="hero__actions">
-        <a class="btn btn-whatsapp btn-lg" data-whatsapp data-whatsapp-message="Olá! Gostaria de fazer uma reserva no Terraço Urbano." data-track-label="hero-reserva" href="#">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.5.1l-.7.9c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4 0-.6.2-.8l.4-.5c.1-.2.2-.3.3-.5v-.5L10 8.2c-.2-.4-.4-.3-.5-.3h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.9 2.9 4.5 4 1.6.6 2.3.5 3.1.4.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2 0-.2-.3-.3-.5-.4z"/></svg>
+        <a class="btn btn-primary btn-lg" href="#reservas" data-reservation data-track="reservation" data-track-label="hero-reserva">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4m8-4v4M3 10h18" stroke-linecap="round"/><path d="M9 15l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Reservar mesa
         </a>
         <a class="btn btn-secondary btn-lg" href="#cardapio" data-track="menu" data-track-label="hero-cardapio">
@@ -589,75 +589,8 @@
         <p class="section-subtitle">4,3 ★ no Google, com mais de 700 avaliações. [INSERIR INFORMAÇÃO: adicionar avaliações reais do Google fornecidas pelo cliente — nunca inventar depoimentos.]</p>
       </div>
 
-      <div class="reviews__grid">
-        <article class="review-card animate-on-scroll">
-          <div class="review-card__header">
-            <span class="review-card__avatar" aria-hidden="true">AM</span>
-            <div class="review-card__author-info">
-              <p class="review-card__author-name">[INSERIR NOME]</p>
-              <p class="review-card__platform">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-                Google
-              </p>
-            </div>
-          </div>
-          <div class="review-card__stars" aria-label="5 de 5 estrelas">
-            <span class="review-card__star" aria-hidden="true">★</span>
-            <span class="review-card__star" aria-hidden="true">★</span>
-            <span class="review-card__star" aria-hidden="true">★</span>
-            <span class="review-card__star" aria-hidden="true">★</span>
-            <span class="review-card__star" aria-hidden="true">★</span>
-          </div>
-          <p class="review-card__quote">[INSERIR INFORMAÇÃO: avaliação real fornecida pelo cliente — nunca inventar conteúdo de avaliações.]</p>
-        </article>
-
-        <article class="review-card animate-on-scroll">
-          <div class="review-card__header">
-            <span class="review-card__avatar" aria-hidden="true">JS</span>
-            <div class="review-card__author-info">
-              <p class="review-card__author-name">[INSERIR NOME]</p>
-              <p class="review-card__platform">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-                Google
-              </p>
-            </div>
-          </div>
-          <div class="review-card__stars" aria-label="5 de 5 estrelas">
-            <span class="review-card__star" aria-hidden="true">★</span>
-            <span class="review-card__star" aria-hidden="true">★</span>
-            <span class="review-card__star" aria-hidden="true">★</span>
-            <span class="review-card__star" aria-hidden="true">★</span>
-            <span class="review-card__star" aria-hidden="true">★</span>
-          </div>
-          <p class="review-card__quote">[INSERIR INFORMAÇÃO: avaliação real fornecida pelo cliente — nunca inventar conteúdo de avaliações.]</p>
-        </article>
-
-        <article class="review-card animate-on-scroll">
-          <div class="review-card__header">
-            <span class="review-card__avatar" aria-hidden="true">CC</span>
-            <div class="review-card__author-info">
-              <p class="review-card__author-name">[INSERIR NOME]</p>
-              <p class="review-card__platform">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-                Google
-              </p>
-            </div>
-          </div>
-          <div class="review-card__stars" aria-label="5 de 5 estrelas">
-            <span class="review-card__star" aria-hidden="true">★</span>
-            <span class="review-card__star" aria-hidden="true">★</span>
-            <span class="review-card__star" aria-hidden="true">★</span>
-            <span class="review-card__star" aria-hidden="true">★</span>
-            <span class="review-card__star" aria-hidden="true">★</span>
-          </div>
-          <p class="review-card__quote">[INSERIR INFORMAÇÃO: avaliação real fornecida pelo cliente — nunca inventar conteúdo de avaliações.]</p>
-        </article>
-      </div>
-
-      <div class="reviews-cta">
-        <a class="btn btn-secondary" href="[INSERIR URL DA AVALIAÇÃO NO GOOGLE]" target="_blank" rel="noopener">
-          Ver avaliações no Google
-        </a>
+      <div class="reviews-carousel" data-reviews-carousel aria-roledescription="carrossel" aria-label="Carrossel de avaliações do Google">
+        <div class="reviews-track" data-reviews-track></div>
       </div>
     </div>
   </section>
@@ -679,6 +612,10 @@
 
           <form class="reservation-form" data-reservation-form novalidate>
             <div class="form-group">
+              <label class="form-label" for="reserva-nome">Seu nome</label>
+              <input class="form-input" type="text" id="reserva-nome" name="nome" autocomplete="name" placeholder="Como podemos te chamar?">
+            </div>
+            <div class="form-group">
               <label class="form-label" for="reserva-pessoas">Número de pessoas</label>
               <select class="form-select" id="reserva-pessoas" name="pessoas">
                 <option value="1">1 pessoa</option>
@@ -697,10 +634,18 @@
               <label class="form-label" for="reserva-data">Data desejada</label>
               <input class="form-input" type="date" id="reserva-data" name="data">
             </div>
+            <div class="form-group">
+              <label class="form-label" for="reserva-horario">Horário</label>
+              <input class="form-input" type="time" id="reserva-horario" name="horario">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="reserva-observacoes">Observações (opcional)</label>
+              <textarea class="form-input form-textarea" id="reserva-observacoes" name="observacoes" rows="3" placeholder="Cadeira de bebê, aniversário, mesa no terraço..."></textarea>
+            </div>
             <button class="btn btn-whatsapp" type="submit" data-track="reservation" data-track-label="form-reserva">
               Confirmar reserva
             </button>
-            <p class="form-hint">Ao enviar, você será direcionado ao canal de contato com a mensagem pronta.</p>
+            <p class="form-hint" role="status" aria-live="polite">Ao confirmar, seus dados serão enviados para o WhatsApp do Terraço com a mensagem pronta.</p>
           </form>
 
           <div class="reservas__details">
@@ -752,12 +697,12 @@
         </div>
 
         <div class="reservas__map">
-          <!-- O iframe do Google Maps será ativado quando o endereço for validado.
-               Troque data-map-placeholder por data-map-active e cole o embed. -->
-          <div class="reservas__map-placeholder">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-7-4.5-7-11a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 6.5-7 11-7 11z" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.5" stroke-linecap="round"/></svg>
-            <p>R. Maj. João Nunes, 96 — Jardim São Paulo (Zona Norte), São Paulo/SP. [INSERIR INFORMAÇÃO: coletar o embed do Google Maps quando o endereço for validado.]</p>
-          </div>
+          <iframe
+            src="https://www.google.com/maps?q=Terra%C3%A7o+Urbano+Bar+e+Restaurante,+R.+Maj.+Jo%C3%A3o+Nunes,+96,+Jardim+S%C3%A3o+Paulo,+S%C3%A3o+Paulo+-+SP,+02046-070&hl=pt-BR&z=16&output=embed"
+            title="Mapa do Terraço Urbano Bar e Restaurante — R. Maj. João Nunes, 96"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen></iframe>
         </div>
       </div>
     </div>
@@ -774,20 +719,13 @@
       </div>
 
       <div class="location__grid">
-        <div class="location__map">
-          <!-- Trocar pelo iframe do Google Maps quando o endereço for validado. -->
+<div class="location__map">
           <iframe
-            src="about:blank"
-            title="Mapa de localização do Terraço Urbano Bar e Restaurante"
+            src="https://www.google.com/maps?q=Terra%C3%A7o+Urbano+Bar+e+Restaurante,+R.+Maj.+Jo%C3%A3o+Nunes,+96,+Jardim+S%C3%A3o+Paulo,+S%C3%A3o+Paulo+-+SP,+02046-070&hl=pt-BR&z=16&output=embed"
+            title="Mapa de localização do Terraço Urbano Bar e Restaurante — R. Maj. João Nunes, 96"
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
-            data-map-embed
-            style="display:none">
-          </iframe>
-          <div class="location__map-placeholder" data-map-placeholder>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-7-4.5-7-11a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 6.5-7 11-7 11z" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.5" stroke-linecap="round"/></svg>
-            <p>R. Maj. João Nunes, 96 — Jardim São Paulo. O mapa oficial será exibido aqui após a validação final do endereço.</p>
-          </div>
+            allowfullscreen></iframe>
         </div>
 
         <div class="location__card">
@@ -917,8 +855,8 @@
         a uma mensagem de distância.
       </p>
 <div class="cta-final__actions">
-        <a class="btn btn-whatsapp btn-lg" data-whatsapp data-whatsapp-message="Olá! Gostaria de fazer uma reserva no Terraço Urbano." data-track-label="cta-final-reserva" href="#">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.5.1l-.7.9c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4 0-.6.2-.8l.4-.5c.1-.2.2-.3.3-.5v-.5L10 8.2c-.2-.4-.4-.3-.5-.3h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.9 2.9 4.5 4 1.6.6 2.3.5 3.1.4.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2 0-.2-.3-.3-.5-.4z"/></svg>
+        <a class="btn btn-primary btn-lg" href="#reservas" data-reservation data-track="reservation" data-track-label="cta-final-reserva">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4m8-4v4M3 10h18" stroke-linecap="round"/><path d="M9 15l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Reservar mesa
         </a>
         <a class="btn btn-primary btn-lg" href="#cardapio" data-track="menu" data-track-label="cta-final-cardapio">
@@ -1028,7 +966,7 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 4h14v3H5zM5 10h14v10H5z"/><path d="M9 7v3m6-3v3" stroke-linecap="round"/></svg>
       Cardápio
     </a>
-    <a class="mobile-cta__link mobile-cta__link--primary" data-whatsapp data-whatsapp-message="Olá! Gostaria de fazer uma reserva no Terraço Urbano." data-track-label="barra-mobile-reservar" href="#">
+    <a class="mobile-cta__link mobile-cta__link--primary" href="#reservas" data-reservation data-track="reservation" data-track-label="barra-mobile-reservar">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 3h14v18l-7-5-7 5z" stroke-linecap="round" stroke-linejoin="round"/></svg>
       Reservar
     </a>

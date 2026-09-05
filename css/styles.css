@@ -1479,45 +1479,52 @@ small {
   background-color: var(--color-bg-alt);
 }
 
-.reviews__grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-md);
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  padding-bottom: var(--space-sm);
+.reviews-carousel {
+  overflow: hidden;
+  margin: 0 calc(-1 * var(--space-md));
+  padding: var(--space-md);
+  touch-action: pan-y;
 }
 
-@media (min-width: 768px) {
-  .reviews__grid {
-    grid-template-columns: repeat(3, 1fr);
-    overflow-x: visible;
-    scroll-snap-type: none;
-  }
+.reviews-track {
+  display: flex;
+  gap: var(--space-md);
+  width: max-content;
+  will-change: transform;
+  cursor: grab;
+}
+
+.reviews-track.is-dragging {
+  cursor: grabbing;
 }
 
 .review-card {
-  flex-shrink: 0;
-  width: 85%;
-  scroll-snap-align: center;
+  flex: 0 0 auto;
+  width: 85vw;
+  max-width: 360px;
   background-color: var(--color-bg-card);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   padding: var(--space-lg);
-  transition: all var(--transition-default);
+  transition: border-color var(--transition-default), box-shadow var(--transition-default);
 }
 
 @media (min-width: 768px) {
   .review-card {
-    width: auto;
+    width: 340px;
   }
 }
 
 .review-card:hover {
   border-color: var(--color-border-hover);
-  transform: translateY(-4px);
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.reviews-empty {
+  text-align: center;
+  color: var(--color-text-muted);
+  padding: var(--space-xl);
+  font-style: italic;
 }
 
 .review-card__header {
@@ -1539,6 +1546,14 @@ small {
   font-size: 1.1rem;
   font-weight: 700;
   color: var(--color-white);
+  flex-shrink: 0;
+}
+
+.review-card__avatar-img {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-circle);
+  object-fit: cover;
   flex-shrink: 0;
 }
 
@@ -2584,6 +2599,12 @@ small {
   outline: none;
 }
 
+.form-input--invalid,
+.form-input--invalid:focus {
+  border-color: #e05d5d;
+  box-shadow: 0 0 0 3px rgba(224, 93, 93, 0.15);
+}
+
 .form-input::placeholder,
 .form-textarea::placeholder {
   color: var(--color-text-dim);
@@ -3092,7 +3113,6 @@ a.event-reserve { text-decoration: none; }
 /* ---- Ajustes auxiliares de seção ---- */
 .menu-footer-note { margin-top: var(--space-2xl); text-align: center; font-size: var(--text-small); color: var(--color-text-dim); }
 .events-cta { margin-top: var(--space-2xl); text-align: center; }
-.reviews-cta { margin-top: var(--space-xl); text-align: center; }
 .form-hint { font-size: 0.8125rem; color: var(--color-text-dim); margin-top: 0.375rem; }
 
 /* ---- Ancoras: compensar header fixo na navegacao nativa ---- */

@@ -10,6 +10,7 @@
   /* ------------------------------------------------------------------------
    * Utilities
    * ---------------------------------------------------------------------- */
+  var REVIEW_STEP = 0.55; // px por frame no carrossel de avaliações (~33px/s)
   function $(selector, scope) {
     return (scope || document).querySelector(selector);
   }
@@ -54,6 +55,7 @@
     initDataTrackBinding();
     initCookieConsent();
     initWaze();
+    initReviews();
 
     onMenuLoaded();
   });
@@ -1004,11 +1006,24 @@
     return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.9.6 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.9.5 2.8.6a2 2 0 0 1 1.8 2.2z" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   }
 
-  function whatsappReservationMessage(people, date) {
-    var parts = ['Olá! Gostaria de fazer uma reserva no Terraço Urbano'];
-    if (people) parts.push('para ' + people + (people === '1' ? ' pessoa' : ' pessoas'));
-    if (date) parts.push('no dia ' + date);
-    return parts.join(' ') + '.';
+  function reservationDateBR(value) {
+    if (!value) return '';
+    var d = new Date(value);
+    if (isNaN(d.getTime())) return value;
+    return ('0' + d.getDate()).slice(-2) + '/' + ('0' + (d.getMonth() + 1)).slice(-2) + '/' + d.getFullYear();
+  }
+
+  function whatsappReservationMessage(fields) {
+    var obs = fields.observacoes && fields.observacoes.trim() ? fields.observacoes.trim() : 'Nenhuma';
+    var lines = [
+      'Nome: ' + (fields.nome || '—'),
+      'Data: ' + (fields.data || '—'),
+      'Horário: ' + (fields.horario || '—'),
+      'Pessoas: ' + (fields.pessoas || '—'),
+      'Observações: ' + obs
+    ];
+    return 'Olá! Gostaria de solicitar uma reserva no Terraço Urbano.\n\n' +
+      lines.join('\n') + '\n\nAguardo a confirmação. Obrigado!';
   }
 
   function initWhatsApp() {
@@ -1063,38 +1078,245 @@
     // Reservation form (if present)
     var reservationForm = $('[data-reservation-form]');
     if (reservationForm) {
+      var hintField = $('.form-hint', reservationForm);
+
+      function field(selector) {
+        return reservationForm.querySelector(selector);
+      }
+
       reservationForm.addEventListener('submit', function (e) {
         e.preventDefault();
-        var peopleField = $('[name="pessoas"]', reservationForm) || $('[data-people]', reservationForm);
-        var dateField = $('[name="data"]', reservationForm) || $('[data-date]', reservationForm);
 
-        var people = peopleField ? peopleField.value : '';
-        var dateVal = dateField ? dateField.value : '';
+        var people = (field('[name="pessoas"]').value || '').trim();
+        var fields = {
+          nome: (field('[name="nome"]').value || '').trim(),
+          data: reservationDateBR(field('[name="data"]').value),
+          horario: (field('[name="horario"]').value || '').trim(),
+          pessoas: people,
+          observacoes: (field('[name="observacoes"]').value || '').trim()
+        };
 
-        var dateBR = '';
-        if (dateVal) {
-          var d = new Date(dateVal);
-          if (!isNaN(d.getTime())) {
-            dateBR = d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear();
-          }
+        // Validacao dos campos obrigatorios
+        var required = [
+          [field('[name="nome"]'), 'nome'],
+          [field('[name="data"]'), 'data'],
+          [field('[name="horario"]'), 'horario'],
+          [field('[name="pessoas"]'), 'pessoas']
+        ];
+        var firstInvalid = null;
+        required.forEach(function (pair) {
+          var el = pair[0];
+          var name = pair[1];
+          if (!el) return;
+          var ok = !!el.value && String(el.value).trim() !== '';
+          el.classList.toggle('form-input--invalid', !ok);
+          el.setAttribute('aria-invalid', ok ? 'false' : 'true');
+          if (!ok && !firstInvalid) firstInvalid = el;
+          if (name === 'data') fields.data = ok ? fields.data : '';
+        });
+
+        if (firstInvalid) {
+          firstInvalid.focus();
+          if (hintField) hintField.textContent = 'Preencha os campos obrigatórios para continuar (nome, data, horário e pessoas).';
+          return;
         }
 
-        var msg = whatsappReservationMessage(people.trim(), dateBR);
-        var url = contactTarget(msg);
-        if (url !== '#') {
-          if (url.indexOf('https://wa.me/') === 0) {
-            window.open(url, '_blank');
-          } else {
-            window.location.href = url;
-          }
+        if (hintField) hintField.textContent = 'Abrindo WhatsApp com sua mensagem pronta...';
+
+        var msg = whatsappReservationMessage(fields);
+        var wa = getWhatsappNumber();
+        if (wa) {
+          var url = 'https://wa.me/' + wa + '?text=' + encodeURIComponent(msg);
+          var opened = null;
+          try { opened = window.open(url, '_blank'); } catch (err) { /* popup bloqueado */ }
+          if (!opened) window.location.href = url;
+        } else {
+          window.location.href = 'tel:+' + getPhoneNumber();
         }
-        trackEvent('reservation', 'submit', people + ' pessoas, ' + dateBR);
+        trackEvent('reservation', 'submit', fields.nome + ', ' + fields.data + ', ' + fields.horario + ', ' + fields.pessoas + ' pessoas');
       });
     }
   }
 
   /* ------------------------------------------------------------------------
-   * 11. ANALYTICS TRACKING
+   * 11. REVIEWS CAROUSEL (avaliações reais via data/reviews.json)
+   * ---------------------------------------------------------------------- */
+  function reviewInitials(name) {
+    var parts = String(name || '').trim().split(/\s+/);
+    var initials = (parts[0] ? parts[0][0] : '') + (parts[1] ? parts[1][0] : '');
+    initials = initials.toUpperCase();
+    return initials || 'G';
+  }
+
+  function reviewStars(rating) {
+    var value = Math.max(1, Math.min(5, parseInt(rating, 10) || 5));
+    return new Array(5).fill('').map(function (_, i) {
+      return i < value
+        ? '<span class="review-card__star" aria-hidden="true">★</span>'
+        : '<span class="review-card__star review-card__star--empty" aria-hidden="true">★</span>';
+    }).join('');
+  }
+
+  function reviewCardHTML(review) {
+    var avatar = review.photo
+      ? '<img class="review-card__avatar-img" src="' + escapeHtml(review.photo) + '" alt="" loading="lazy">'
+      : '<span class="review-card__avatar" aria-hidden="true">' + escapeHtml(reviewInitials(review.name)) + '</span>';
+
+    var stars = reviewStars(review.rating);
+
+    return '' +
+      '<article class="review-card" role="group" aria-roledescription="slide" aria-label="Avaliação de ' + escapeHtml(review.name) + '">' +
+        '<div class="review-card__header">' + avatar +
+          '<div class="review-card__author-info">' +
+            '<p class="review-card__author-name">' + escapeHtml(review.name) + '</p>' +
+            '<p class="review-card__platform">Google</p>' +
+          '</div>' +
+        '</div>' +
+        '<div class="review-card__stars" role="img" aria-label="' + escapeHtml(String(review.rating || 5)) + ' de 5 estrelas">' + stars + '</div>' +
+        '<p class="review-card__quote">“' + escapeHtml(review.text) + '”</p>' +
+      '</article>';
+  }
+
+  function renderReviewsEmpty(track) {
+    track.innerHTML = '<p class="reviews-empty">As avaliações reais do Google entram aqui em breve — nenhum depoimento é inventado.</p>';
+  }
+
+  function renderReviewsCarousel(track, reviews) {
+    var html = '';
+    for (var i = 0; i < reviews.length; i++) html += reviewCardHTML(reviews[i]);
+    // Set duplicado para o loop infinito contínuo
+    track.appendChild(makeNode(html + html));
+    startReviewsMarquee(track);
+  }
+
+  function startReviewsMarquee(track) {
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var offset = 0;
+    var running = false;
+    var last = null;
+    var dragging = false;
+    var moved = false;
+    var startX = 0;
+    var rafId = null;
+
+    function halfWidth() {
+      var hw = track.scrollWidth / 2;
+      return hw > 0 ? hw : 0;
+    }
+
+    function apply() {
+      var hw = halfWidth();
+      if (hw > 0) {
+        while (offset < 0) offset += hw;
+        while (offset >= hw) offset -= hw;
+      }
+      track.style.transform = 'translateX(-' + offset + 'px)';
+    }
+
+    function step(t) {
+      if (!running) return;
+      if (last === null) last = t;
+      var dt = Math.min(0.05, (t - last) / 1000);
+      last = t;
+      offset += REVIEW_STEP * 60 * dt;
+      apply();
+      if (running) rafId = window.requestAnimationFrame(step);
+    }
+
+    function run() {
+      if (!running) return;
+      window.cancelAnimationFrame(rafId);
+      last = null;
+      rafId = window.requestAnimationFrame(step);
+    }
+
+    function stop() {
+      running = false;
+      window.cancelAnimationFrame(rafId);
+    }
+
+    function resume() {
+      if (reduced) return;
+      if (dragging) return;
+      running = true;
+      run();
+    }
+
+    function onDown(e) {
+      dragging = true;
+      moved = false;
+      startX = e.clientX;
+      stop();
+      track.classList.add('is-dragging');
+      if (track.setPointerCapture) track.setPointerCapture(e.pointerId);
+    }
+
+    function onMove(e) {
+      if (!dragging) return;
+      var dx = e.clientX - startX;
+      if (Math.abs(dx) > 4) moved = true;
+      startX = e.clientX;
+      offset -= dx;
+      apply();
+    }
+
+    function onEnd() {
+      if (!dragging) return;
+      dragging = false;
+      track.classList.remove('is-dragging');
+      if (!moved) offset = Math.round(offset);
+      resume();
+    }
+
+    if (reduced) {
+      apply();
+      return;
+    }
+
+    track.addEventListener('pointerdown', onDown);
+    track.addEventListener('pointermove', onMove);
+    track.addEventListener('pointerup', onEnd);
+    track.addEventListener('pointercancel', onEnd);
+    track.addEventListener('pointerleave', onEnd);
+
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) stop();
+      else resume();
+    });
+
+    resume();
+  }
+
+  function initReviews() {
+    var carousel = $('[data-reviews-carousel]');
+    var track = $('[data-reviews-track]', carousel);
+    if (!carousel || !track) return;
+
+    fetch('data/reviews.json')
+      .then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.json();
+      })
+      .then(function (reviews) {
+        if (!Array.isArray(reviews) || !reviews.length) {
+          renderReviewsEmpty(track);
+          return;
+        }
+        renderReviewsCarousel(track, reviews);
+      })
+      .catch(function () {
+        renderReviewsEmpty(track);
+      });
+  }
+
+  function makeNode(html) {
+    var holder = document.createElement('div');
+    holder.innerHTML = html;
+    return holder.firstElementChild;
+  }
+
+  /* ------------------------------------------------------------------------
+   * 12. ANALYTICS TRACKING
    * ---------------------------------------------------------------------- */
   function trackEvent(category, action, label) {
     // Google Analytics 4
