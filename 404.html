@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Página não encontrada | Terraço Urbano Bar e Restaurante</title>
+  <meta name="description" content="Ops! Esse caminho não leva ao Terraço. Volte para a página inicial do Terraço Urbano Bar e Restaurante.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <header class="site-header header" id="topo">
+    <div class="container">
+      <a href="./" class="header__logo" aria-label="Terraço Urbano Bar e Restaurante — voltar ao início">
+        <img src="assets/images/logo.svg" alt="Logo do Terraço Urbano Bar e Restaurante" loading="eager">
+        <span class="header__logo-text">Terraço Urbano<span>Bar &amp; Restaurante</span></span>
+      </a>
+    </div>
+  </header>
+
+  <main class="page-404">
+    <div class="container">
+      <span class="page-404__code" aria-hidden="true">404</span>
+      <h1 class="page-404__title">Ops! Esse caminho não leva ao Terraço.</h1>
+      <p class="page-404__text">
+        A página que você procura não existe por aqui — mas a boa notícia é
+        que sua mesa no Terraço Urbano pode estar só a um clique de distância.
+      </p>
+      <div class="page-404__actions">
+        <a class="btn btn-primary" href="./">Voltar ao site</a>
+        <a class="btn btn-secondary" href="./#cardapio">Ver cardápio</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__bottom">
+      <p class="footer__copyright">© <span data-year></span> Terraço Urbano Bar e Restaurante. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelector('[data-year]').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+{
+  "site": {
+    "name": "Terraço Urbano Bar e Restaurante",
+    "shortName": "Terraço Urbano",
+    "tagline": "Seu próximo momento começa aqui.",
+    "description": "Bar e restaurante na Zona Norte de São Paulo (Jardim São Paulo) com música ao vivo, drinks autorais, porções generosas, feijoada aos sábados, espaço kids e ambiente pet friendly. Entrega pelo iFood.",
+    "url": "[INSERIR URL FINAL DO SITE]",
+    "phone": "(11) 2288-1005",
+    "whatsapp": "[VALIDAR COM O CLIENTE SE O NÚMERO POSSUI WHATSAPP — até lá, os botões usam o telefone]",
+    "email": "[INSERIR E-MAIL]",
+    "instagram": "@terracourbano",
+    "instagramUrl": "https://www.instagram.com/terracourbano",
+    "priceRange": "R$ 40 a 140 por pessoa",
+    "rating": "4.3",
+    "reviewCount": "712",
+    "address": {
+      "street": "R. Maj. João Nunes, 96",
+      "neighborhood": "Jardim São Paulo (Zona Norte)",
+      "city": "São Paulo",
+      "state": "SP",
+      "zipCode": "02046-070",
+      "full": "R. Maj. João Nunes, 96 — Jardim São Paulo (Zona Norte), São Paulo - SP, CEP 02046-070",
+      "plusCode": "G94Q+XP"
+    },
+    "coordinates": {
+      "lat": "[INSERIR LATITUDE (não inventar)]",
+      "lng": "[INSERIR LONGITUDE (não inventar)]"
+    },
+    "googleMapsEmbed": "[INSERIR URL DE EMBED DO GOOGLE MAPS]",
+    "googleMapsPlaceId": "[INSERIR PLACE ID]",
+    "googleReviewUrl": "[INSERIR URL DO PERFIL DE AVALIAÇÕES NO GOOGLE]",
+    "hours": {
+      "monday": "[INSERIR HORÁRIO]",
+      "tuesday": "[INSERIR HORÁRIO]",
+      "wednesday": "[INSERIR HORÁRIO]",
+      "thursday": "[INSERIR HORÁRIO]",
+      "friday": "[INSERIR HORÁRIO]",
+      "saturday": "[INSERIR HORÁRIO]",
+      "sunday": "[INSERIR HORÁRIO]"
+    },
+    "features": [
+      "Música ao vivo",
+      "Drinks autorais",
+      "Porções generosas",
+      "Feijoada aos sábados",
+      "Espaço Kids",
+      "Pet Friendly",
+      "Refeição no local",
+      "Para viagem",
+      "Entrega pelo iFood"
+    ],
+    "social": {
+      "instagram": "https://www.instagram.com/terracourbano",
+      "facebook": "[INSERIR URL DO FACEBOOK]",
+      "tiktok": "[INSERIR URL DO TIKTOK]"
+    }
+  },
+  "analytics": {
+    "googleAnalyticsId": "[INSERIR GA4 ID — ex: G-XXXXXXXXXX]",
+    "googleSearchConsole": "[INSERIR CÓDIGO DE VERIFICAÇÃO]",
+    "metaPixelId": "[INSERIR META PIXEL ID]",
+    "conversionEvents": {
+      "whatsapp_click": "whatsapp_click",
+      "phone_click": "phone_click",
+      "delivery_click": "delivery_click",
+      "menu_click": "menu_click",
+      "directions_click": "directions_click",
+      "maps_click": "maps_click",
+      "waze_click": "waze_click",
+      "reservation_click": "reservation_click",
+      "instagram_click": "instagram_click",
+      "event_click": "event_click"
+    }
+  },
+  "delivery": {
+    "ifoodUrl": "https://www.ifood.com.br/delivery/sao-paulo-sp/terraco-urbano-jardim-sao-paulozona-norte/ef8e5a72-a0a8-4ade-95fd-33edb7251d26",
+    "rappiUrl": "[SEM LINK OFICIAL INFORMADO — usar somente o iFood]",
+    "uberEatsUrl": "[SEM LINK OFICIAL INFORMADO — usar somente o iFood]",
+    "ownDelivery": false,
+    "ownDeliveryPhone": "[VALIDAR COM O CLIENTE]"
+  }
+}

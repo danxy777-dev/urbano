@@ -1,0 +1,116 @@
+{
+  "categories": [
+    {
+      "id": "entradas",
+      "name": "Entradas",
+      "icon": "🍽️",
+      "items": [
+        {
+          "id": "e1",
+          "name": "[INSERIR NOME DA ENTRADA]",
+          "description": "[INSERIR DESCRIÇÃO]",
+          "price": "[INSERIR PREÇO]",
+          "image": "assets/images/menu/[INSERIR-imagem].webp",
+          "featured": false,
+          "tags": []
+        }
+      ]
+    },
+    {
+      "id": "porcoes",
+      "name": "Porções",
+      "icon": "🥘",
+      "items": [
+        {
+          "id": "p1",
+          "name": "[INSERIR NOME DA PORÇÃO]",
+          "description": "[INSERIR DESCRIÇÃO]",
+          "price": "[INSERIR PREÇO]",
+          "image": "assets/images/menu/[INSERIR-imagem].webp",
+          "featured": false,
+          "tags": []
+        }
+      ]
+    },
+    {
+      "id": "espetos",
+      "name": "Espetos",
+      "icon": "🍢",
+      "items": [
+        {
+          "id": "es1",
+          "name": "[INSERIR NOME DO ESPETO]",
+          "description": "[INSERIR DESCRIÇÃO]",
+          "price": "[INSERIR PREÇO]",
+          "image": "assets/images/menu/[INSERIR-imagem].webp",
+          "featured": false,
+          "tags": []
+        }
+      ]
+    },
+    {
+      "id": "pratos",
+      "name": "Pratos",
+      "icon": "🥩",
+      "items": [
+        {
+          "id": "pr1",
+          "name": "[INSERIR NOME DO PRATO]",
+          "description": "[INSERIR DESCRIÇÃO]",
+          "price": "[INSERIR PREÇO]",
+          "image": "assets/images/menu/[INSERIR-imagem].webp",
+          "featured": false,
+          "tags": []
+        }
+      ]
+    },
+    {
+      "id": "bebidas",
+      "name": "Bebidas",
+      "icon": "🥤",
+      "items": [
+        {
+          "id": "b1",
+          "name": "[INSERIR NOME DA BEBIDA]",
+          "description": "[INSERIR DESCRIÇÃO]",
+          "price": "[INSERIR PREÇO]",
+          "image": "assets/images/menu/[INSERIR-imagem].webp",
+          "featured": false,
+          "tags": []
+        }
+      ]
+    },
+    {
+      "id": "drinks",
+      "name": "Drinks",
+      "icon": "🍸",
+      "items": [
+        {
+          "id": "d1",
+          "name": "[INSERIR NOME DO DRINK]",
+          "description": "[INSERIR DESCRIÇÃO]",
+          "price": "[INSERIR PREÇO]",
+          "image": "assets/images/menu/[INSERIR-imagem].webp",
+          "featured": false,
+          "tags": []
+        }
+      ]
+    },
+    {
+      "id": "sobremesas",
+      "name": "Sobremesas",
+      "icon": "🍰",
+      "items": [
+        {
+          "id": "s1",
+          "name": "[INSERIR NOME DA SOBREMESA]",
+          "description": "[INSERIR DESCRIÇÃO]",
+          "price": "[INSERIR PREÇO]",
+          "image": "assets/images/menu/[INSERIR-imagem].webp",
+          "featured": false,
+          "tags": []
+        }
+      ]
+    }
+  ]
+}

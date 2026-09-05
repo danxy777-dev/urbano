@@ -1,0 +1,34 @@
+{
+  "events": [
+    {
+      "id": "ev1",
+      "title": "[INSERIR NOME DO EVENTO]",
+      "artist": "[INSERIR NOME DO ARTISTA/DJ]",
+      "date": "[INSERIR DATA — ex: 2026-09-12]",
+      "time": "[INSERIR HORÁRIO — ex: 20:00]",
+      "description": "[INSERIR DESCRIÇÃO DO EVENTO]",
+      "image": "assets/images/events/[INSERIR-imagem].webp",
+      "featured": true,
+      "category": "musica"
+    },
+    {
+      "id": "ev2",
+      "title": "Feijoada no Terraço",
+      "artist": "",
+      "date": "every-saturday",
+      "time": "[INSERIR HORÁRIO]",
+      "description": "Feijoada completa aos sábados. Acompanha arroz, couve, farofa, laranja e torresmo.",
+      "image": "assets/images/events/feijoada.webp",
+      "featured": true,
+      "category": "gastronomia"
+    }
+  ],
+  "recurring": [
+    {
+      "day": "sábado",
+      "title": "Feijoada no Terraço",
+      "description": "Feijoada completa aos sábados.",
+      "time": "[INSERIR HORÁRIO]"
+    }
+  ]
+}
