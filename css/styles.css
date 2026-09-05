@@ -7,49 +7,55 @@
 @import url('https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito+Sans:opsz,wght@6..12,400;6..12,500;6..12,600;6..12,700;6..12,800&family=Righteous&display=swap');
 
 /* ── 1. CSS CUSTOM PROPERTIES ──
-   Identidade visual Terraço Urbano:
-   verde tropical + amarelo/dourado (cerveja) + laranja + bordô + creme + carvão/marrom escuro */
+   Identidade visual Terraço Urbano (baseada na descrição da logo):
+   PRETO #000 (urbano) · BORDÔ #390101 (calor/personalidade)
+   AMARELO CERVEJA #FFA200/#FFB400 (cerveja/diversão)
+   VERDE TROPICAL #149019/#47C343/#48811C (tropical/verão)
+   BRANCO/OFF-WHITE #FFFFFF/#F4FFFE (contraste/legibilidade)
+   Proporção de referência: 60% preto · 15% branco · 10% bordô · 8% verde · 7% amarelo */
 :root {
-  /* Colors — base escura (tropical/urbana) */
-  --color-bg: #16130f;
-  --color-bg-alt: #211c16;
-  --color-bg-card: #2a231b;
-  --color-surface: #332a20;
-  --color-cream: #f3e9d7;
-  --color-cream-soft: #e7dcc6;
+  /* Preto — cor de fundo principal */
+  --color-bg: #000000;
+  --color-bg-alt: #0c0a08;
+  --color-bg-card: #16130f;
+  --color-surface: #1e1a15;
 
-  /* Verde tropical (folhas de coqueiro) — identity primary */
-  --color-primary: #3f8f4e;
-  --color-primary-light: #5cb36b;
-  --color-primary-dark: #2f6f3d;
-  --color-primary-deep: #265a32;
+  /* Off-white / branco quente (espuma, mãos, contornos) */
+  --color-cream: #f4fffe;
+  --color-cream-soft: #e8f3f1;
 
-  /* Amarelo/dourado (cerveja) + laranja */
-  --color-accent: #e9b44c;
-  --color-accent-hover: #f5c76a;
-  --color-orange: #e07b39;
-  --color-orange-hover: #ef8f4c;
+  /* Verde tropical (folhas de palmeira/coqueiro) */
+  --color-primary: #149019;
+  --color-primary-light: #47c343;
+  --color-primary-dark: #3dad3a;
+  --color-primary-deep: #48811c;
 
-  /* Vinho / bordô (texto e detalhes da logo) */
-  --color-wine: #7b1f2b;
-  --color-wine-light: #a0364a;
-  --color-wine-deep: #5d1721;
+  /* Amarelo/dourado — cerveja + diversão */
+  --color-accent: #ffa200;
+  --color-accent-hover: #ffb400;
+  --color-orange: #ffb400;
+  --color-orange-hover: #ffc960;
 
-  /* Texto */
-  --color-text: #f5eee0;
-  --color-text-muted: #cdbfa9;
-  --color-text-dim: #9a8d79;
+  /* Bordô / vinho escuro — cor institucional (TERRAÇO / Urbano) */
+  --color-wine: #390101;
+  --color-wine-light: #5c0b0b;
+  --color-wine-deep: #2b0000;
+
+  /* Texto — branco / off-white para contraste sobre preto */
+  --color-text: #ffffff;
+  --color-text-muted: #c9d6d4;
+  --color-text-dim: #8fa09d;
   --color-text-strong: #ffffff;
-  --color-border: rgba(63, 143, 78, 0.22);
-  --color-border-hover: rgba(233, 180, 76, 0.45);
+  --color-border: rgba(255, 162, 0, 0.22);
+  --color-border-hover: rgba(255, 180, 0, 0.5);
   --color-white: #ffffff;
-  --color-overlay: rgba(22, 19, 15, 0.74);
-  --color-overlay-hero: linear-gradient(180deg, rgba(22,19,15,0.72) 0%, rgba(38,22,26,0.58) 45%, rgba(22,19,15,0.82) 100%);
-  --color-success: #5cb36b;
+  --color-overlay: rgba(0, 0, 0, 0.74);
+  --color-overlay-hero: linear-gradient(180deg, rgba(0,0,0,0.74) 0%, rgba(43,0,0,0.55) 45%, rgba(0,0,0,0.86) 100%);
+  --color-success: #47c343;
   --color-whatsapp: #25d366;
   --color-whatsapp-hover: #1da851;
 
-  /* Typography — titulos divertidos/retrô-urbano, leitura limpa */
+  /* Typography — titulos fortes/retrô-urbano, leitura limpa */
   --font-heading: 'Righteous', 'Arial Black', system-ui, sans-serif;
   --font-display: 'Lilita One', 'Rockwell', Georgia, serif;
   --font-body: 'Nunito Sans', system-ui, -apple-system, sans-serif;
@@ -3328,8 +3334,8 @@ section[id] { scroll-margin-top: calc(var(--header-height) + var(--space-sm)); }
 body {
   background-color: var(--color-bg);
   background-image:
-    radial-gradient(1200px 480px at 85% -10%, rgba(63, 143, 78, 0.10), transparent 60%),
-    radial-gradient(900px 420px at -10% 30%, rgba(233, 180, 76, 0.05), transparent 55%);
+    radial-gradient(1200px 480px at 85% -10%, rgba(20, 144, 25, 0.10), transparent 60%),
+    radial-gradient(900px 420px at -10% 30%, rgba(255, 180, 0, 0.05), transparent 55%);
   background-attachment: fixed;
 }
 
@@ -3368,7 +3374,7 @@ body {
   color: var(--color-accent);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-pill);
-  background-color: rgba(63, 143, 78, 0.12);
+  background-color: rgba(20, 144, 25, 0.12);
 }
 
 .tropical-kicker svg {
@@ -3462,14 +3468,14 @@ body {
   color: var(--color-accent);
   background: radial-gradient(circle at 35% 30%, var(--color-primary-dark), var(--color-primary-deep) 68%);
   border: 1px solid var(--color-border);
-  box-shadow: 0 0 0 6px rgba(63, 143, 78, 0.12);
+  box-shadow: 0 0 0 6px rgba(20, 144, 25, 0.12);
 }
 
 .tropical-divider__icon svg { width: 18px; height: 18px; }
 
 /* ── Header: identidade com acento tropical ── */
 .header.scrolled {
-  background-color: rgba(22, 19, 15, 0.92);
+  background-color: rgba(0, 0, 0, 0.92);
   border-bottom: 1px solid var(--color-border);
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
 }
@@ -3517,40 +3523,40 @@ body {
   left: 130%;
 }
 
-/* Primary — verde tropical */
+/* Primary — amarelo/dourado cerveja (principal) */
 .btn-primary {
-  background-color: var(--color-primary);
-  border-color: var(--color-primary);
-  color: var(--color-white);
-  box-shadow: 0 6px 22px rgba(63, 143, 78, 0.35);
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-bg);
+  box-shadow: 0 6px 22px rgba(255, 162, 0, 0.35);
 }
 
 .btn-primary:hover {
-  background-color: var(--color-primary-light);
-  border-color: var(--color-primary-light);
-  color: var(--color-white);
+  background-color: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+  color: var(--color-bg);
   transform: translateY(-3px);
-  box-shadow: 0 10px 30px rgba(63, 143, 78, 0.45);
+  box-shadow: 0 10px 30px rgba(255, 180, 0, 0.5);
 }
 
 .btn-primary:active {
   transform: translateY(0) scale(0.97);
-  box-shadow: 0 3px 12px rgba(63, 143, 78, 0.3);
+  box-shadow: 0 3px 12px rgba(255, 162, 0, 0.35);
 }
 
-/* Secondary — bordô com borda */
+/* Secondary — bordô institucional (fundo escuro quente) */
 .btn-secondary {
-  color: var(--color-text);
+  color: var(--color-white);
   border-color: var(--color-wine-light);
-  background-color: rgba(123, 31, 43, 0.06);
+  background-color: rgba(57, 1, 1, 0.35);
 }
 
 .btn-secondary:hover {
   background-color: var(--color-wine);
   border-color: var(--color-wine);
-  color: var(--color-white);
+  color: var(--color-accent);
   transform: translateY(-3px);
-  box-shadow: 0 10px 26px rgba(123, 31, 43, 0.4);
+  box-shadow: 0 10px 26px rgba(57, 1, 1, 0.5);
 }
 
 .btn-secondary:active {
@@ -3568,19 +3574,19 @@ body {
   box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
 }
 
-/* Destaque laranja para CTAs especiais (iFood / reservas) */
+/* Destaque dourado para CTAs especiais (iFood / reservas) */
 .btn-orange {
   background-color: var(--color-orange);
   border-color: var(--color-orange);
-  color: var(--color-white);
+  color: var(--color-bg);
 }
 
 .btn-orange:hover {
   background-color: var(--color-orange-hover);
   border-color: var(--color-orange-hover);
-  color: var(--color-white);
+  color: var(--color-bg);
   transform: translateY(-3px);
-  box-shadow: 0 10px 30px rgba(224, 123, 57, 0.4);
+  box-shadow: 0 10px 30px rgba(255, 201, 96, 0.45);
 }
 
 /* ── HERO: primeira dobra mais tropical + urbana ── */
@@ -3595,14 +3601,14 @@ body {
   z-index: 1;
   pointer-events: none;
   background:
-    radial-gradient(720px 340px at 78% 12%, rgba(233, 180, 76, 0.16), transparent 62%),
-    radial-gradient(1000px 460px at 8% 88%, rgba(63, 143, 78, 0.22), transparent 60%);
+    radial-gradient(720px 340px at 78% 12%, rgba(255, 180, 0, 0.16), transparent 62%),
+    radial-gradient(1000px 460px at 8% 88%, rgba(20, 144, 25, 0.2), transparent 60%);
 }
 
 .hero__badge {
-  background-color: rgba(63, 143, 78, 0.16);
-  border-color: rgba(233, 180, 76, 0.35);
-  color: var(--color-cream);
+  background-color: rgba(20, 144, 25, 0.18);
+  border-color: rgba(255, 180, 0, 0.4);
+  color: var(--color-white);
   font-weight: 600;
   letter-spacing: 0.04em;
   backdrop-filter: blur(6px);
@@ -3644,16 +3650,16 @@ body {
   margin-bottom: var(--space-md);
   font-size: 0.82rem;
   color: var(--color-accent);
-  background-color: rgba(22, 19, 15, 0.45);
-  border-color: rgba(233, 180, 76, 0.4);
+  background-color: rgba(0, 0, 0, 0.45);
+  border-color: rgba(255, 180, 0, 0.4);
   backdrop-filter: blur(6px);
   padding: 0.5rem 1.1rem;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
 }
 
 .hero__info-item {
-  background-color: rgba(22, 19, 15, 0.6);
-  border-color: rgba(233, 180, 76, 0.3);
+  background-color: rgba(0, 0, 0, 0.6);
+  border-color: rgba(255, 180, 0, 0.3);
   color: var(--color-cream-soft);
   backdrop-filter: blur(6px);
 }
@@ -3685,7 +3691,7 @@ body {
 .about .btn-secondary {
   color: var(--color-wine);
   border-color: var(--color-wine-light);
-  background-color: rgba(123, 31, 43, 0.05);
+  background-color: rgba(57, 1, 1, 0.05);
 }
 
 .about .about__image-accent {
@@ -3700,7 +3706,7 @@ body {
 /* Features em verde profundo */
 .features {
   background:
-    radial-gradient(900px 420px at 90% 0%, rgba(63, 143, 78, 0.14), transparent 60%),
+    radial-gradient(900px 420px at 90% 0%, rgba(20, 144, 25, 0.14), transparent 60%),
     var(--color-bg-alt);
 }
 
@@ -3708,7 +3714,7 @@ body {
   border-radius: 20px;
   border-top: 3px solid var(--color-primary);
   background:
-    linear-gradient(180deg, rgba(63, 143, 78, 0.06), rgba(63, 143, 78, 0)),
+    linear-gradient(180deg, rgba(20, 144, 25, 0.06), rgba(20, 144, 25, 0)),
     var(--color-bg-card);
 }
 
@@ -3720,7 +3726,7 @@ body {
 .feature-card__icon {
   background: linear-gradient(135deg, var(--color-primary-deep), var(--color-primary-dark));
   color: var(--color-accent);
-  box-shadow: inset 0 0 0 1px rgba(233, 180, 76, 0.25);
+  box-shadow: inset 0 0 0 1px rgba(255, 180, 0, 0.25);
 }
 
 .feature-card__title { color: var(--color-text-strong); }
@@ -3729,21 +3735,21 @@ body {
 /* Cardápio — fundo com micro padrão */
 .menu {
   background:
-    radial-gradient(1000px 500px at 10% 10%, rgba(233, 180, 76, 0.06), transparent 60%),
+    radial-gradient(1000px 500px at 10% 10%, rgba(255, 180, 0, 0.06), transparent 60%),
     var(--color-bg);
 }
 
 /* Eventos em bordô profundo */
 .events {
   background:
-    radial-gradient(1000px 460px at 88% 12%, rgba(123, 31, 43, 0.4), transparent 62%),
+    radial-gradient(1000px 460px at 88% 12%, rgba(57, 1, 1, 0.4), transparent 62%),
     var(--color-bg-alt);
 }
 
 .event-card {
   border-radius: 18px;
   border-top: 3px solid var(--color-accent);
-  background: linear-gradient(180deg, rgba(123, 31, 43, 0.18), rgba(123, 31, 43, 0)),
+  background: linear-gradient(180deg, rgba(57, 1, 1, 0.18), rgba(57, 1, 1, 0)),
     var(--color-bg-card);
 }
 
@@ -3758,7 +3764,7 @@ body {
 /* Delivery — cartão com identidade verde/cerveja */
 .delivery__card {
   background:
-    linear-gradient(135deg, rgba(233, 180, 76, 0.10), rgba(63, 143, 78, 0.12)),
+    linear-gradient(135deg, rgba(255, 180, 0, 0.10), rgba(20, 144, 25, 0.12)),
     var(--color-surface);
   border: 1px solid var(--color-border-hover);
   border-radius: 24px;
@@ -3774,7 +3780,7 @@ body {
   width: 220px;
   height: 220px;
   border-radius: var(--radius-circle);
-  background: radial-gradient(circle, rgba(233, 180, 76, 0.18), transparent 70%);
+  background: radial-gradient(circle, rgba(255, 180, 0, 0.18), transparent 70%);
   pointer-events: none;
 }
 
@@ -3791,12 +3797,12 @@ body {
 
 .review-card {
   background-color: #fff9ec;
-  border: 1px solid rgba(123, 31, 43, 0.15);
+  border: 1px solid rgba(57, 1, 1, 0.15);
   border-radius: 18px;
   border-top: 3px solid var(--color-wine);
 }
 
-.review-card:hover { box-shadow: 0 14px 34px rgba(123, 31, 43, 0.18); }
+.review-card:hover { box-shadow: 0 14px 34px rgba(57, 1, 1, 0.18); }
 
 .review-card__quote {
   border-left-color: var(--color-accent);
@@ -3812,7 +3818,7 @@ body {
 /* Reservas — bordô profundo */
 .reservas {
   background:
-    radial-gradient(1000px 500px at 12% 90%, rgba(123, 31, 43, 0.35), transparent 62%),
+    radial-gradient(1000px 500px at 12% 90%, rgba(57, 1, 1, 0.35), transparent 62%),
     var(--color-bg);
 }
 
@@ -3827,8 +3833,8 @@ body {
 .form-input,
 .form-textarea,
 .form-select {
-  background-color: rgba(22, 19, 15, 0.55);
-  border-color: rgba(233, 180, 76, 0.18);
+  background-color: rgba(0, 0, 0, 0.55);
+  border-color: rgba(255, 180, 0, 0.18);
   color: var(--color-cream-soft);
 }
 
@@ -3836,7 +3842,7 @@ body {
 .form-textarea:focus,
 .form-select:focus {
   border-color: var(--color-primary-light);
-  box-shadow: 0 0 0 3px rgba(63, 143, 78, 0.25);
+  box-shadow: 0 0 0 3px rgba(20, 144, 25, 0.25);
 }
 
 .form-label { color: var(--color-text); font-weight: 600; }
@@ -3844,7 +3850,7 @@ body {
 /* Localização — verde tropical */
 .location {
   background:
-    radial-gradient(900px 460px at 90% 20%, rgba(63, 143, 78, 0.14), transparent 62%),
+    radial-gradient(900px 460px at 90% 20%, rgba(20, 144, 25, 0.14), transparent 62%),
     var(--color-bg-alt);
 }
 
@@ -3881,13 +3887,13 @@ body {
 }
 
 .instagram__item { border-radius: 14px; overflow: hidden; }
-.instagram__item-overlay { background: rgba(123, 31, 43, 0.35); }
+.instagram__item-overlay { background: rgba(57, 1, 1, 0.35); }
 
 /* CTA final — grande, com vibe de "aqui a coisa acontece" */
 .cta-final {
   background:
-    radial-gradient(1100px 520px at 70% 0%, rgba(233, 180, 76, 0.14), transparent 60%),
-    radial-gradient(900px 480px at 12% 100%, rgba(123, 31, 43, 0.4), transparent 62%),
+    radial-gradient(1100px 520px at 70% 0%, rgba(255, 180, 0, 0.14), transparent 60%),
+    radial-gradient(900px 480px at 12% 100%, rgba(57, 1, 1, 0.4), transparent 62%),
     var(--color-bg-alt);
   border-top: 1px solid var(--color-border);
   border-bottom: 1px solid var(--color-border);
@@ -3901,9 +3907,9 @@ body {
 /* ── Footer: identidade completa (verde + bordô + arco) ── */
 .footer {
   background:
-    linear-gradient(180deg, rgba(123, 31, 43, 0.28) 0%, rgba(22, 19, 15, 0.4) 40%, rgba(22, 19, 15, 0.9) 100%),
+    linear-gradient(180deg, rgba(57, 1, 1, 0.28) 0%, rgba(0, 0, 0, 0.4) 40%, rgba(0, 0, 0, 0.9) 100%),
     var(--color-bg-alt);
-  border-top: 1px solid rgba(233, 180, 76, 0.24);
+  border-top: 1px solid rgba(255, 180, 0, 0.24);
   position: relative;
 }
 
@@ -3917,7 +3923,7 @@ body {
   width: 420px;
   height: 76px;
   background:
-    radial-gradient(50% 100% at 50% 0%, rgba(233, 180, 76, 0.18), transparent 70%);
+    radial-gradient(50% 100% at 50% 0%, rgba(255, 180, 0, 0.18), transparent 70%);
   border-radius: 50% 50% 0 0;
   pointer-events: none;
 }
@@ -3943,8 +3949,8 @@ body {
 }
 
 .footer__social-link {
-  background: rgba(63, 143, 78, 0.12);
-  border-color: rgba(233, 180, 76, 0.22);
+  background: rgba(20, 144, 25, 0.12);
+  border-color: rgba(255, 180, 0, 0.22);
 }
 
 .footer__social-link:hover {
@@ -3961,11 +3967,11 @@ body {
 
 .footer__bottom {
   border-top: 1px solid var(--color-border);
-  background-color: rgba(22, 19, 15, 0.6);
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
-/* ── Lightbox overlay — vinho profundo ── */
-.lightbox { background-color: rgba(22, 14, 12, 0.92); }
+/* ── Lightbox overlay — preto profundo ── */
+.lightbox { background-color: rgba(0, 0, 0, 0.92); }
 
 /* ── WhatsApp flutuante — verde tropical com brilho ── */
 .whatsapp-float {
@@ -3990,13 +3996,13 @@ body {
   background: linear-gradient(135deg, var(--color-accent), var(--color-orange));
   border-color: transparent;
   color: var(--color-bg);
-  box-shadow: 0 6px 18px rgba(233, 180, 76, 0.3);
+  box-shadow: 0 6px 18px rgba(255, 180, 0, 0.3);
 }
 
 .menu-item {
   border-radius: 18px;
   border-left: 4px solid var(--color-primary);
-  background: linear-gradient(180deg, rgba(63, 143, 78, 0.06), rgba(63, 143, 78, 0)),
+  background: linear-gradient(180deg, rgba(20, 144, 25, 0.06), rgba(20, 144, 25, 0)),
     var(--color-bg-card);
   transition: transform var(--transition-default), box-shadow var(--transition-default), border-left-color var(--transition-default);
 }
@@ -4022,9 +4028,9 @@ body {
 }
 
 .menu-item__tag {
-  background-color: rgba(233, 180, 76, 0.14);
+  background-color: rgba(255, 180, 0, 0.14);
   color: var(--color-accent);
-  border: 1px solid rgba(233, 180, 76, 0.25);
+  border: 1px solid rgba(255, 180, 0, 0.25);
 }
 
 .menu-category-title {
@@ -4045,7 +4051,7 @@ body {
 .about__image {
   border-radius: 22px;
   overflow: hidden;
-  box-shadow: 0 18px 44px rgba(123, 31, 43, 0.22);
+  box-shadow: 0 18px 44px rgba(57, 1, 1, 0.22);
 }
 
 .about__image-accent {
@@ -4072,8 +4078,8 @@ body {
 
 .cta-final::before {
   background:
-    radial-gradient(600px 320px at 60% -20%, rgba(233, 180, 76, 0.16), transparent 65%),
-    radial-gradient(500px 300px at 10% 30%, rgba(63, 143, 78, 0.14), transparent 60%);
+    radial-gradient(600px 320px at 60% -20%, rgba(255, 180, 0, 0.16), transparent 65%),
+    radial-gradient(500px 300px at 10% 30%, rgba(20, 144, 25, 0.14), transparent 60%);
 }
 
 /* ── Reduz movimento (acessibilidade) ── */
