@@ -40,11 +40,11 @@
   document.addEventListener('DOMContentLoaded', function () {
     initHeaderEffects();
     initMobileMenu();
-    initScrollProgress();
     initMenuSystem();
     initEventsSystem();
     initGalleryLightbox();
     initScrollAnimations();
+    initParallax();
     initSmoothScroll();
     initWhatsApp();
     initAnalytics();
@@ -379,6 +379,8 @@
           '</div>' +
           '<div class="menu-items-grid">' + inner + '</div>' +
         '</div>';
+
+      initScrollAnimations(menuItemsWrap);
     }
 
     function renderAllCategories() {
@@ -436,7 +438,7 @@
       var priceText = String(item.price || '').replace('[INSERIR PREÇO]', 'A definir');
 
       return (
-        '<article class="menu-item" data-category="' + escapeHtml(cat.id) + '">' +
+        '<article class="menu-item animate-on-scroll" data-category="' + escapeHtml(cat.id) + '">' +
           imgHTML +
           '<div class="menu-item-body">' +
             '<h4 class="menu-item-name">' + escapeHtml(item.name).replace(/\[INSERIR[^\]]*\]/g, 'Novidade') + '</h4>' +
@@ -575,7 +577,7 @@
     if (time.indexOf('[INSERIR') !== -1) time = '';
 
     return (
-      '<article class="event-card' + (ev.featured ? ' event-card-featured' : '') + '">' +
+      '<article class="event-card animate-on-scroll' + (ev.featured ? ' event-card-featured' : '') + '">' +
         '<div class="event-image">' + imgHTML + featuredBadge + '</div>' +
         '<div class="event-body">' +
           dateHTML +
@@ -825,25 +827,87 @@
   }
 
   /* ------------------------------------------------------------------------
-   * 8. SCROLL ANIMATIONS (Intersection Observer)
+   * 8. SCROLL REVEAL ANIMATIONS (Intersection Observer)
+   *    Alvos estáticos são auto-cadastrados em JS para não modificar o HTML.
+   *    Elementos dinâmicos (cardápio / eventos) carregam a classe no template.
    * ---------------------------------------------------------------------- */
+  var REVEAL_SELECTORS =
+    '.section-header, .about__text, .about__image-wrapper, .stat, ' +
+    '.delivery__card, .gallery__item, .contato__card, ' +
+    '.location__map, .location__card, .instagram__header, .instagram__item, ' +
+    '.cta-final__content, .events-cta, .menu-footer-note';
+
+  var REVEAL_STAGGER_GROUPS =
+    '.gallery__grid, .contato__grid, .stats, .instagram__grid, .events-grid, .menu-items-grid';
+
+  var REVEAL_DURATION_MS = 700;
+  var REVEAL_STAGGER_MS = 90;
+
+  function revealVariantFor(el) {
+    if (el.classList.contains('about__image-wrapper')) return 'animate-fade-left';
+    if (el.classList.contains('location__map')) return 'animate-fade-left';
+    if (el.classList.contains('location__card')) return 'animate-fade-right';
+    if (el.classList.contains('gallery__item')) return 'animate-zoom';
+    if (el.classList.contains('delivery__card')) return 'animate-zoom';
+    return '';
+  }
+
+  function applyStaggerDelays(root) {
+    var groups = $$(REVEAL_STAGGER_GROUPS, root || document);
+    groups.forEach(function (group) {
+      Array.prototype.forEach.call(group.children, function (child, i) {
+        if (!child.classList.contains('animate-on-scroll')) return;
+        var delay = Math.min(i, 7) * REVEAL_STAGGER_MS;
+        child.style.setProperty('--reveal-delay', delay + 'ms');
+        child.setAttribute('data-reveal-delay', String(delay));
+      });
+    });
+  }
+
+  function finishReveal(el) {
+    var delay = parseInt(el.getAttribute('data-reveal-delay') || '0', 10) || 0;
+    if (window.getComputedStyle) {
+      var td = window.getComputedStyle(el).transitionDelay;
+      if (td) {
+        var seconds = td.split(',').reduce(function (max, s) {
+          var sec = parseFloat(s) || 0;
+          return sec > max ? sec : max;
+        }, 0);
+        delay = Math.max(delay, Math.round(seconds * 1000));
+      }
+    }
+    window.setTimeout(function () {
+      el.classList.remove('animate-on-scroll');
+      el.classList.remove('animate-in');
+      el.classList.remove('animate-ready');
+      el.style.removeProperty('--reveal-delay');
+    }, delay + REVEAL_DURATION_MS + 120);
+  }
+
   function initScrollAnimations(scope) {
+    var root = scope || document;
     var prefersReduced = window.matchMedia
       ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
       : false;
 
-    var targets = $$('.animate-on-scroll', scope || document);
-
-    if (prefersReduced) {
-      targets.forEach(function (el) {
-        el.classList.add('animate-in');
+    if (!scope) {
+      // Auto-cadastra alvos estáticos para que o HTML não precise mudar
+      $$(REVEAL_SELECTORS, root).forEach(function (el) {
+        if (el.classList.contains('animate-on-scroll')) return;
+        el.classList.add('animate-on-scroll');
+        var variant = revealVariantFor(el);
+        if (variant) el.classList.add(variant);
       });
-      return;
     }
 
-    if (!('IntersectionObserver' in window)) {
+    applyStaggerDelays(root);
+
+    var targets = $$('.animate-on-scroll', root);
+
+    if (prefersReduced || !('IntersectionObserver' in window)) {
       targets.forEach(function (el) {
         el.classList.add('animate-in');
+        finishReveal(el);
       });
       return;
     }
@@ -862,11 +926,12 @@
             el.classList.remove('animate-ready');
           });
           observer.unobserve(el);
+          finishReveal(el);
         }
       });
     }, {
       threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
+      rootMargin: '0px 0px -40px 0px'
     });
 
     targets.forEach(function (el) {
@@ -874,6 +939,84 @@
         observer.observe(el);
       }
     });
+  }
+
+  /* ------------------------------------------------------------------------
+   * 8b. PARALLAX SUTIL (transform/opacity only, rAF; off em mobile/reduced)
+   * ---------------------------------------------------------------------- */
+  function initParallax() {
+    if (!window.matchMedia) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (window.matchMedia('(max-width: 767px)').matches) return;
+
+    var hero = $('.hero');
+    var aboutImage = $('.about__image img');
+    var locationMap = $('.location__map iframe');
+    if (!hero && !aboutImage && !locationMap) return;
+
+    var ticking = false;
+    var lastY = null;
+    var heroH = hero ? hero.offsetHeight : 0;
+
+    function clamp(v, min, max) {
+      return v < min ? min : (v > max ? max : v);
+    }
+
+    function update() {
+      ticking = false;
+      var y = window.pageYOffset || 0;
+      if (y === lastY) return;
+      lastY = y;
+      var vh = window.innerHeight;
+
+      if (hero) {
+        if (y < heroH) {
+          var p = clamp(y / Math.max(heroH - vh, vh * 0.5), 0, 1);
+          hero.style.backgroundPosition = 'center ' + (28 + p * 30).toFixed(2) + '%';
+        } else if (hero.style.backgroundPosition) {
+          hero.style.backgroundPosition = 'center 30%';
+        }
+      }
+
+      if (aboutImage) {
+        var heroBottom = hero ? heroH : 0;
+        if (y > heroBottom - vh) {
+          var r = aboutImage.parentNode.getBoundingClientRect();
+          var offset = (r.top + r.height / 2) - vh / 2;
+          var ty = clamp(offset * 0.06, -22, 22);
+          aboutImage.style.transform = ty !== 0 ? 'translateY(' + ty.toFixed(1) + 'px)' : 'none';
+        } else {
+          aboutImage.style.transform = 'none';
+        }
+      }
+
+      if (locationMap) {
+        var lr = locationMap.parentNode.getBoundingClientRect();
+        if (lr.top < vh && lr.bottom > 0) {
+          var lc = (lr.top + lr.height / 2) - vh / 2;
+          var ly = clamp(lc * 0.05, -14, 14);
+          locationMap.style.transform = ly !== 0 ? 'translateY(' + ly.toFixed(1) + 'px)' : 'none';
+        } else {
+          locationMap.style.transform = 'none';
+        }
+      }
+    }
+
+    function request() {
+      if (!ticking) {
+        window.requestAnimationFrame(update);
+        ticking = true;
+      }
+    }
+
+    window.addEventListener('scroll', request, { passive: true });
+    window.addEventListener('resize', function () {
+      heroH = hero ? hero.offsetHeight : 0;
+      lastY = null;
+      request();
+    }, { passive: true });
+
+    update();
   }
 
   /* ------------------------------------------------------------------------

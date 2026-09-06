@@ -839,31 +839,6 @@ small {
   flex-shrink: 0;
 }
 
-.hero__scroll-indicator {
-  position: absolute;
-  bottom: var(--space-lg);
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-xs);
-  color: var(--color-text-dim);
-  font-size: var(--text-small);
-  animation: heroScrollBounce 2s ease-in-out infinite;
-}
-
-.hero__scroll-indicator svg {
-  width: 24px;
-  height: 24px;
-}
-
-@keyframes heroScrollBounce {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50% { transform: translateX(-50%) translateY(8px); }
-}
-
 /* ── 8. ABOUT (SOBRE) SECTION ── */
 .about {
   background-color: var(--color-bg);
@@ -2354,7 +2329,20 @@ small {
 .animate-on-scroll {
   opacity: 0;
   transform: translateY(30px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition: opacity 0.7s cubic-bezier(0.22, 0.61, 0.36, 1), transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0s);
+}
+
+.animate-on-scroll.animate-fade-left {
+  transform: translateX(40px);
+}
+
+.animate-on-scroll.animate-fade-right {
+  transform: translateX(-40px);
+}
+
+.animate-on-scroll.animate-zoom {
+  transform: scale(0.96);
 }
 
 .animate-on-scroll.animated {
@@ -3598,8 +3586,9 @@ body {
 }
 
 .feature-card:hover {
-  transform: translateY(-10px);
+  transform: translateY(-8px);
   border-top-color: var(--color-accent);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.32);
 }
 
 .feature-card__icon {
@@ -3940,12 +3929,137 @@ body {
     radial-gradient(500px 300px at 10% 30%, rgba(20, 144, 25, 0.14), transparent 60%);
 }
 
+/* ============================================================
+   FLUIDEZ / ANIMAÇÕES DE SCROLL (camada final)
+   Hero em cascata, reveal ao entrar no viewport, stagger,
+   hover refinado, parallax sutil e ajustes de mobile/perf.
+   ============================================================ */
+
+/* ── Hero: entrada em cascata no carregamento ── */
+.hero__content > * {
+  opacity: 0;
+  animation: heroReveal 0.75s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+.hero__content .hero__kicker { animation-delay: 0.05s; }
+.hero__content .hero__badges { animation-delay: 0.14s; }
+.hero__content .hero__title { animation-delay: 0.24s; }
+.hero__content .hero__subtitle { animation-delay: 0.38s; }
+.hero__content .hero__actions { animation-delay: 0.52s; }
+.hero__content .hero__info { animation-delay: 0.66s; }
+
+@keyframes heroReveal {
+  from { opacity: 0; transform: translateY(26px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Divisor orgânico: flutuação bem sutil ── */
+.tropical-divider__icon {
+  animation: dividerFloat 5s ease-in-out infinite;
+}
+
+@keyframes dividerFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+/* ── Hover dos cards: elevação discreta e profundidade ── */
+.stat {
+  transition: transform var(--transition-default), box-shadow var(--transition-default), border-color var(--transition-default);
+}
+
+.stat:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 26px rgba(57, 1, 1, 0.16);
+}
+
+.gallery__item {
+  transition: transform var(--transition-default), box-shadow var(--transition-default);
+}
+
+.gallery__item:hover {
+  transform: translateY(-5px);
+}
+
+.review-card {
+  transition: transform var(--transition-default), box-shadow var(--transition-default), border-color var(--transition-default);
+}
+
+.review-card:hover {
+  transform: translateY(-4px);
+}
+
+.instagram__item {
+  transition: transform var(--transition-default), box-shadow var(--transition-default);
+}
+
+.instagram__item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+}
+
+/* ── Botões: leve brilho extra + feedback no clique ── */
+.btn-primary:hover,
+.btn-secondary:hover,
+.btn-whatsapp:hover,
+.btn-orange:hover {
+  filter: brightness(1.07);
+}
+
+.btn:active {
+  transform: scale(0.97);
+  filter: brightness(0.98);
+}
+
+/* ── Mobile: menos deslocamento e efeitos mais leves ── */
+@media (max-width: 767px) {
+  body {
+    background-attachment: scroll;
+  }
+
+  .animate-on-scroll { transform: translateY(16px); }
+  .animate-on-scroll.animate-fade-left { transform: translateX(18px); }
+  .animate-on-scroll.animate-fade-right { transform: translateX(-18px); }
+  .animate-on-scroll.animate-zoom { transform: scale(0.98); }
+
+  .hero__content > * { animation-duration: 0.6s; }
+}
+
+/* ── Reveal: transição garantida durante a entrada (última para vencer) ── */
+.animate-on-scroll,
+.animate-on-scroll.animate-ready {
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0s);
+}
+
+.animate-on-scroll.animate-in {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
 /* ── Reduz movimento (acessibilidade) ── */
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   [class*="tropical-leaf"],
   .tropical-divider__icon,
-  .btn::after,
-  .hero__scroll-indicator {
+  .btn::after {
     animation: none !important;
+  }
+
+  .animate-on-scroll,
+  .animate-scale-in {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .hero__content > * {
+    animation: none !important;
+    opacity: 1 !important;
   }
 }
