@@ -3,7 +3,7 @@
     "name": "Terraço Urbano Bar e Restaurante",
     "shortName": "Terraço Urbano",
     "tagline": "Seu próximo momento começa aqui.",
-    "description": "Bar e restaurante na Zona Norte de São Paulo (Jardim São Paulo) com música ao vivo, drinks autorais, porções generosas, feijoada aos sábados, espaço kids e ambiente pet friendly. Entrega pelo iFood.",
+    "description": "Bar e restaurante na Zona Norte de São Paulo (Jardim São Paulo) com música ao vivo, drinks autorais, porções generosas, feijoada aos sábados, espaço kids e ambiente pet friendly.",
     "url": "[INSERIR URL FINAL DO SITE]",
     "phone": "(11) 2288-1005",
     "whatsapp": "551122881005",
@@ -48,8 +48,7 @@
       "Espaço Kids",
       "Pet Friendly",
       "Refeição no local",
-      "Para viagem",
-      "Entrega pelo iFood"
+      "Para viagem"
     ],
     "social": {
       "instagram": "https://www.instagram.com/terracourbano",
@@ -64,7 +63,6 @@
     "conversionEvents": {
       "whatsapp_click": "whatsapp_click",
       "phone_click": "phone_click",
-      "delivery_click": "delivery_click",
       "menu_click": "menu_click",
       "directions_click": "directions_click",
       "maps_click": "maps_click",
@@ -72,12 +70,5 @@
       "instagram_click": "instagram_click",
       "event_click": "event_click"
     }
-  },
-  "delivery": {
-    "ifoodUrl": "https://www.ifood.com.br/delivery/sao-paulo-sp/terraco-urbano-jardim-sao-paulozona-norte/ef8e5a72-a0a8-4ade-95fd-33edb7251d26",
-    "rappiUrl": "[SEM LINK OFICIAL INFORMADO — usar somente o iFood]",
-    "uberEatsUrl": "[SEM LINK OFICIAL INFORMADO — usar somente o iFood]",
-    "ownDelivery": false,
-    "ownDeliveryPhone": "[VALIDAR COM O CLIENTE]"
   }
 }

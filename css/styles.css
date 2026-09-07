@@ -3012,41 +3012,6 @@ a.event-contact { text-decoration: none; }
 /* ---- Ancoras: compensar header fixo na navegacao nativa ---- */
 section[id] { scroll-margin-top: calc(var(--header-height) + var(--space-sm)); }
 
-/* ---- Seção Delivery ---- */
-.delivery { background-color: var(--color-bg); }
-.delivery__card {
-  background: linear-gradient(135deg, var(--color-bg-alt) 0%, var(--color-surface) 100%);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-2xl) var(--space-lg);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-lg);
-  text-align: center;
-}
-@media (min-width: 768px) {
-  .delivery__card { flex-direction: row; justify-content: space-between; text-align: left; }
-}
-.delivery__title {
-  font-family: var(--font-heading);
-  font-size: clamp(1.5rem, 3vw, 2rem);
-  font-weight: 700;
-  color: var(--color-text);
-  margin-bottom: var(--space-xs);
-}
-.delivery__subtitle {
-  color: var(--color-text-muted);
-  font-size: var(--text-body);
-  line-height: 1.5;
-}
-.delivery__apps {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-sm);
-  justify-content: center;
-}
-
 /* ---- Consentimento de cookies (LGPD) ---- */
 .cookie-consent {
   position: fixed;
@@ -3215,7 +3180,6 @@ body {
 /* ── Tipografia: títulos com personalidade ── */
 .section-title,
 .about__title,
-.delivery__title,
 .cta-final__title {
   line-height: 1.12;
   letter-spacing: 0.01em;
@@ -3441,7 +3405,7 @@ body {
   box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
 }
 
-/* Destaque dourado para CTAs especiais (iFood / destaques) */
+/* Destaque dourado para CTAs especiais */
 .btn-orange {
   background-color: var(--color-orange);
   border-color: var(--color-orange);
@@ -3628,29 +3592,6 @@ body {
 
 .event-card__title { color: var(--color-text-strong); }
 .event-card__date { color: var(--color-accent); }
-
-/* Delivery — cartão com identidade verde/cerveja */
-.delivery__card {
-  background:
-    linear-gradient(135deg, rgba(255, 180, 0, 0.10), rgba(20, 144, 25, 0.12)),
-    var(--color-surface);
-  border: 1px solid var(--color-border-hover);
-  border-radius: 24px;
-  position: relative;
-  overflow: hidden;
-}
-
-.delivery__card::after {
-  content: "";
-  position: absolute;
-  right: -40px;
-  top: -40px;
-  width: 220px;
-  height: 220px;
-  border-radius: var(--radius-circle);
-  background: radial-gradient(circle, rgba(255, 180, 0, 0.18), transparent 70%);
-  pointer-events: none;
-}
 
 /* Reviews em creme (identidade invertida) */
 .reviews {

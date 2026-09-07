@@ -1,6 +1,6 @@
 # Terraço Urbano Bar e Restaurante — Site Oficial
 
-Site one-page profissional, responsivo e focado em conversão (contato direto via WhatsApp, cardápio, como chegar, delivery e eventos) para o **Terraço Urbano** na Zona Norte de São Paulo.
+Site one-page profissional, responsivo e focado em conversão (contato direto via WhatsApp, cardápio, como chegar e eventos) para o **Terraço Urbano** na Zona Norte de São Paulo.
 
 ---
 
@@ -20,7 +20,7 @@ terracourbano/
 ├── js/
 │   └── main.js             → Menu, eventos, lightbox, WhatsApp, analytics, etc.
 ├── data/                   → CONTEÚDO EDITÁVEL SEM PROGRAMAR
-│   ├── site.json           → Contato, endereço, horários, analytics, delivery
+│   ├── site.json           → Contato, endereço, horários, analytics
 │   ├── menu.json           → Cardápio (categorias + itens + preços)
 │   ├── events.json         → Eventos
 │   └── reviews.json        → Avaliações reais do Google (carrossel)
@@ -57,7 +57,6 @@ Tudo que contém `[INSERIR ...]` no código e **não foi inventado** precisa ser
 | `coordinates` | Lat/Long para o mapa | 🔶 pendente |
 | `googleMapsEmbed` | Embed do Google Maps (já aplicado sem chave) | ✅ preenchido |
 | `hours.*` | Horários reais por dia (ex: `"18:00 - 23:00"`) | 🔶 pendente |
-| `delivery.*` | iFood: URL OFICIAL do Terraço (já aplicada) | ✅ preenchido |
 
 > **✓ WhatsApp confirmado** — `551122881005` (formato digital, sem espaço). Todos os botões
 > de contato já abrem `wa.me/551122881005` com a mensagem pronta; o ícone flutuante usa o
@@ -134,8 +133,8 @@ Editar `data/reviews.json` — **usar apenas avaliações reais e autorizadas pe
 - `photo`: URL da foto de perfil (opcional; sem foto, o site gera um avatar com a inicial).
 - O carrossel mostra os cards em loop infinito com arraste em touch/mouse; **nunca inventar** depoimentos. Enquanto a lista estiver vazia (`[]`), o site exibe aviso honesto.
 
-### Horários, contato e delivery
-Editar `data/site.json`. O site já mostra **"Aberto agora / Fechado agora"** automaticamente com base nos horários informados. O delivery oficial do Terraço Urbano é o **iFood** (seção "Delivery" com CTA "Pedir pelo iFood" — URL real já aplicada).
+### Horários e contato
+Editar `data/site.json`. O site já mostra **"Aberto agora / Fechado agora"** automaticamente com base nos horários informados.
 
 ## 5. Analytics e consentimento (LGPD)
 
@@ -155,7 +154,6 @@ O site possui um **banner de consentimento** que segue a LGPD:
 **Eventos de conversão automaticamente rastreados** (aparecem no GA4/Pixel):
 - Clique em WhatsApp → `whatsapp_click`
 - Clique em Telefone (`tel:`) → `phone_click`
-- Clique em Delivery (iFood) → `delivery_click`
 - Clique no Cardápio → `menu_click`
 - Clique em Como Chegar → `directions_click` (inclui os botões do Google Maps e Waze)
 - Clique no Instagram → `instagram_click`
@@ -219,7 +217,7 @@ O site é estático e publica em qualquer hospedagem:
 
 ## 12. `.env.example`
 
-O arquivo `.env.example` documenta toda a configuração (contato, endereço, analytics, delivery) e os cuidados de segurança. Como é um site estático, **não existem segredos em tempo de execução** — jamais coloque chaves de Google Maps JS API no navegador; prefira o **embed sem chave** (iframe), que é o que o site usa.
+O arquivo `.env.example` documenta toda a configuração (contato, endereço, analytics) e os cuidados de segurança. Como é um site estático, **não existem segredos em tempo de execução** — jamais coloque chaves de Google Maps JS API no navegador; prefira o **embed sem chave** (iframe), que é o que o site usa.
 
 ### Google Maps sem chave (keyless)
 A seção Localização usa o embed oficial do Google sem API key:
@@ -236,20 +234,18 @@ https://www.google.com/maps?q=Terra%C3%A7o+Urbano+Bar+e+Restaurante,+R.+Maj.+Jo%
 - **Nunca inventar** preços, pratos, horários, eventos, endereço ou avaliações.
 - Toda informação pendente está marcada como `[INSERIR ...]`.
 - **WhatsApp confirmado**: `site.json → whatsapp = "551122881005"` — todos os links de `wa.me` e os botões de contato funcionam por esse canal.
-- **Delivery oficial**: apenas **iFood** (URL oficial já aplicada). Não publicar pontos de venda não confirmados (ex.: Rappi/Uber Eats).
 - Utilizar somente fotos reais do restaurante (ou com autorização) para ambiente, comidas e público.
 - O cookie de consentimento fica inativo até que IDs reais de rastreamento sejam configurados — nunca instalar rastreadores escondidos.
 
 ## 14. Estado atual (resumo do que já foi aplicado)
 
-- Dados reais do cliente em `site.json` e `index.html`: telefone, endereço `R. Maj. João Nunes, 96`, CEP, Plus Code `G94Q+XP`, faixa de preço `R$ 40–140`, nota `4,3`/`712`, URL oficial do iFood.
+- Dados reais do cliente em `site.json` e `index.html`: telefone, endereço `R. Maj. João Nunes, 96`, CEP, Plus Code `G94Q+XP`, faixa de preço `R$ 40–140`, nota `4,3`/`712`.
 - **Canais de contato inteligentes**: botões `data-whatsapp` resolvem WhatsApp `wa.me` **ou** telefone `tel:` automaticamente (evento `whatsapp_click`/`phone_click`); ícone flutuante vira telefone enquanto o WhatsApp não for confirmado.
-- **3 CTAs principais e barra fixa mobile** `[Cardápio] [Falar] [iFood]` (hero, CTA-final, header e barra mobile) — os botões "Fale com a gente" abrem o WhatsApp com a mensagem pronta.
+- **2 CTAs principais e barra fixa mobile** `[Cardápio] [Falar]` (hero, CTA-final, header e barra mobile) — os botões "Fale com a gente" abrem o WhatsApp com a mensagem pronta.
 - **Seção Contato** (substitui a antiga Reservas): canais oficiais em cards — WhatsApp, Instagram, Ligar agora e Como chegar (Google Maps/Waze). O site não oferece reserva de mesas; incentiva o contato direto pelos canais reais do estabelecimento.
 - **Botões desde o início como contato direto**: "Fale com a gente" (header, hero, sobre, CTA-final, barra mobile) abrem o WhatsApp; não existe formulário nem agendamento no site.
 - **Carrossel de avaliações** alimentado por `data/reviews.json` (loop infinito, arraste touch/mouse, pausa ao reduzir movimento). Sem dados reais o carrossel mostra aviso honesto — nenhuma avaliação é inventada.
 - **Google Maps keyless** aplicado na seção Localização (embed oficial sem API key, marcador automático no endereço) + botões funcionais de rota via Google Maps e Waze (endereço real).
-- Seção **Delivery** reorganizada para iFood e reposicionada logo após o Cardápio.
 - Páginas `privacy.html` e `termos.html` criadas e linkadas no rodapé + aviso de cookies.
 - `404.html` com a mensagem nova (`"Ops! Esse caminho não leva ao Terraço."`).
 

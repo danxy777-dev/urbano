@@ -833,7 +833,7 @@
    * ---------------------------------------------------------------------- */
   var REVEAL_SELECTORS =
     '.section-header, .about__text, .about__image-wrapper, .stat, ' +
-    '.delivery__card, .gallery__item, .contato__card, ' +
+    '.gallery__item, .contato__card, ' +
     '.location__map, .location__card, .instagram__header, .instagram__item, ' +
     '.cta-final__content, .events-cta, .menu-footer-note';
 
@@ -848,7 +848,6 @@
     if (el.classList.contains('location__map')) return 'animate-fade-left';
     if (el.classList.contains('location__card')) return 'animate-fade-right';
     if (el.classList.contains('gallery__item')) return 'animate-zoom';
-    if (el.classList.contains('delivery__card')) return 'animate-zoom';
     return '';
   }
 
@@ -1421,7 +1420,6 @@
       case 'whatsapp': return 'whatsapp';
       case 'phone': return 'phone';
       case 'call': return 'phone';
-      case 'delivery': return 'delivery';
       case 'menu': return 'menu';
       case 'directions': return 'directions';
       case 'instagram': return 'instagram';
@@ -1431,13 +1429,6 @@
 
   function initDataTrackBinding() {
     initAnalytics();
-
-    // Delivery links
-    $$('[data-delivery]').forEach(function (el) {
-      el.addEventListener('click', function () {
-        trackEvent('delivery', 'click', el.getAttribute('data-track-label') || 'delivery');
-      });
-    });
 
     // Directions links
     $$('[data-directions]').forEach(function (el) {
